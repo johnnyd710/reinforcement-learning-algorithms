@@ -201,7 +201,7 @@ class RL2:
         '''
         R, nActions = self.mdp.R, self.mdp.nActions
         total_reward = 0
-        counts_a = np.zeros(nActions)
+        counts_a = np.ones(nActions)
         posterior = np.zeros(nActions)
         empiricalMeans = np.zeros(nActions)
         empiricalMeans_sum = np.zeros(nActions)
@@ -211,10 +211,7 @@ class RL2:
             reward=0
 
             for a in range(0, nActions):
-                if counts_a[a]:
-                    upper_bound[a] = empiricalMeans[a] + np.sqrt((2*np.log(n))/counts_a[a])
-                else:
-                    upper_bound[a] = empiricalMeans[a] + np.sqrt(2*np.log(n))
+                upper_bound[a] = empiricalMeans[a] + np.sqrt((2*np.log(n))/counts_a[a])
 
             #select best action (a* : argmax of the empirical means)
             a_ = np.argmax(upper_bound)
